@@ -2,23 +2,14 @@
 
 int main(int argc, char* argv[])
 {
-    if (!SDL_Init(SDL_INIT_VIDEO))
-    {
-        return -1;
-    }
+    SDL_Init(SDL_INIT_VIDEO);
 
-    SDL_Window* window =
-        SDL_CreateWindow(
-            "My First SDL3 Game",
-            800,
-            600,
-            0);
+    SDL_Window* window = SDL_CreateWindow("Move Square", 800, 600, 0);
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, NULL);
 
-    if (!window)
-    {
-        SDL_Quit();
-        return -1;
-    }
+    float x = 400;
+    float y = 300;
+    float speed = 5.0f;
 
     bool running = true;
 
@@ -34,9 +25,28 @@ int main(int argc, char* argv[])
             }
         }
 
+        // キー入力（押しっぱなし）
+        const bool* keys = SDL_GetKeyboardState(NULL);
+
+        if (keys[SDL_SCANCODE_LEFT])  x -= speed;
+        if (keys[SDL_SCANCODE_RIGHT]) x += speed;
+        if (keys[SDL_SCANCODE_UP])    y -= speed;
+        if (keys[SDL_SCANCODE_DOWN])  y += speed;
+
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        SDL_RenderClear(renderer);
+
+        SDL_FRect rect = { x, y, 50, 50 };
+
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+        SDL_RenderFillRect(renderer, &rect);
+
+        SDL_RenderPresent(renderer);
+
         SDL_Delay(16);
     }
 
+    SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
 
