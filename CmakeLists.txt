@@ -6,8 +6,13 @@ set(CMAKE_CXX_STANDARD 20)
 
 find_package(SDL3 CONFIG REQUIRED)
 
+# srcフォルダ内のcppを全部自動で拾う
+file(GLOB SRC_FILES CONFIGURE_DEPENDS
+    src/*.cpp
+)
+
 add_executable(main
-    src/main.cpp
+    ${SRC_FILES}
 )
 
 target_link_libraries(main PRIVATE SDL3::SDL3)
