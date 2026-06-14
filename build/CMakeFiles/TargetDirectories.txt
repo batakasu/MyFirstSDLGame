@@ -1,3 +1,0 @@
-D:/0_programming/0_OriginalGame/myFirstSDL3/MyFirstSDLGame/build/CMakeFiles/main.dir
-D:/0_programming/0_OriginalGame/myFirstSDL3/MyFirstSDLGame/build/CMakeFiles/ALL_BUILD.dir
-D:/0_programming/0_OriginalGame/myFirstSDL3/MyFirstSDLGame/build/CMakeFiles/ZERO_CHECK.dir
