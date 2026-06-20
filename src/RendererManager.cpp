@@ -1,7 +1,7 @@
 #include "RendererManager.h"
 
 RendererManager::RendererManager(Window& window)
-    : mHandle(SDL_CreateRenderer(window.GetHandle(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC))
+    : mHandle(SDL_CreateRenderer(window.GetHandle(), nullptr))
     , mWindow(window)
     , mResources(mHandle)
     , mViewManager(mHandle)

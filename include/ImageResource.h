@@ -3,8 +3,8 @@
 #include <string>
 #include <unordered_map>
 
-struct SDL_Texture;
-struct SDL_Renderer;
+typedef struct SDL_Renderer SDL_Renderer;
+typedef struct SDL_Texture SDL_Texture;
 
 class ImageResource
 {
