@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 
-class SoundManager;
 class MouseManager;
 class KeyboardManager;
 
@@ -9,4 +8,6 @@ class KeyboardManager;
 struct GameContext
 {
     const std::string mGameTitle;
+    MouseManager& mMouse;
+    KeyboardManager& mKeyboard;
 };
