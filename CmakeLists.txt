@@ -5,6 +5,7 @@ project(SDLGameTemplate)
 set(CMAKE_CXX_STANDARD 20)
 
 find_package(SDL3 CONFIG REQUIRED)
+find_package(SDL3_image CONFIG REQUIRED)
 
 file(GLOB SRC_FILES CONFIGURE_DEPENDS
     src/*.cpp
@@ -14,4 +15,7 @@ add_executable(game ${SRC_FILES})
 
 target_include_directories(game PRIVATE include)
 
-target_link_libraries(game PRIVATE SDL3::SDL3)
+target_link_libraries(game PRIVATE
+    SDL3::SDL3
+    SDL3_image::SDL3_image
+)
