@@ -5,7 +5,6 @@
 #include "Id.h" 
 #include "ImageResource.h"
 #include "Vec2.h"
-#include "ViewManager.h"
 #include "Window.h"
 
 class RendererManager
@@ -26,6 +25,5 @@ private:
     SDL_Renderer* mHandle;
     Window& mWindow;
     ImageResource mResources;
-    ViewManager mViewManager;
 
 };

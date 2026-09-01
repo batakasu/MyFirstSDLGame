@@ -4,7 +4,7 @@ RendererManager::RendererManager(Window& window)
     : mHandle(SDL_CreateRenderer(window.GetHandle(), nullptr))
     , mWindow(window)
     , mResources(mHandle)
-    , mViewManager(mHandle)
+    // , mViewManager(mHandle)
 {
 }
 
@@ -26,7 +26,8 @@ std::shared_ptr<SDL_Texture> RendererManager::LoadImage(const std::string& fileP
 ViewId RendererManager::CreateIlustView(const std::string& filePath, const Vec2& position, const Vec2& size)
 {
     auto texture = mResources.LoadImage(filePath);
-    return mViewManager.AddView(texture, position, size);
+    return 0;
+    // return mViewManager.AddView(texture, position, size);
 }
 
 void RendererManager::BeginFrame()
@@ -36,7 +37,7 @@ void RendererManager::BeginFrame()
 
 void RendererManager::DrawView()
 {
-    mViewManager.DrawAll();
+    // mViewManager.DrawAll();
 }
 
 void RendererManager::EndFrame()
