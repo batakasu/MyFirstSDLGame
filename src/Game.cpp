@@ -7,6 +7,8 @@
 
 Game::Game(GameContext& gameContext)
     : mGameContext(gameContext)
+    , mWindow(gameContext, Vec2(1280, 720))
+    , mRenderer(mWindow)
 {
 }
 

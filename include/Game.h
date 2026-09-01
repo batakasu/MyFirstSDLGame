@@ -1,5 +1,7 @@
 #pragma once
 #include <SDL3/SDL.h>
+#include "Window.h"
+#include "RendererManager.h"
 
 struct GameContext;
 
@@ -12,6 +14,8 @@ public:
 private:
     GameContext& mGameContext;
     SDL_Event mEvent;
+    Window mWindow;
+    RendererManager mRenderer;
 
     void BeginFrame();
     void EndFrame();

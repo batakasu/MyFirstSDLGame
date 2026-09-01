@@ -1,9 +1,12 @@
 #pragma once
 #include <SDL3/SDL_mouse.h>
+#include <ViewFactory.h>
+#include <ViewManager.h>
 #include "Vec2.h"
 
 class GameContext;
 
+// windowを複数生成することも可能
 class Window
 {
 public:
@@ -16,4 +19,6 @@ private:
     GameContext& mGameContext;
     Vec2 mSize;
     SDL_Window* mHandle;
+    ViewFactory mFactory;
+    ViewManager mManager;
 };
