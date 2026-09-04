@@ -10,7 +10,17 @@ void KeyboardManager::BeginFrame()
     }
 }
 
+bool KeyboardManager::IsPressed(SDL_Scancode key) const
+{
+    return mCurrent[key].IsPressed();
+}
+
 bool KeyboardManager::IsHeld(SDL_Scancode key) const
 {
     return mCurrent[key].IsHeld();
+}
+
+bool KeyboardManager::IsReleased(SDL_Scancode key) const
+{
+    return mCurrent[key].IsReleased();
 }

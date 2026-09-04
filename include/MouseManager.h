@@ -11,10 +11,10 @@ public:
 
     void BeginFrame();
     Vec2 GetPosition() const;
-    ButtonState GetLeft() const;
-    ButtonState GetRight() const;
-    ButtonState GetMiddle() const;
-    
+    const ButtonState& GetLeft() const {return mLeft;};
+    const ButtonState& GetRight() const {return mRight;};
+    const ButtonState& GetMiddle() const {return mMiddle;};
+
 private:
     SDL_Cursor* mCursor;
     Vec2 mPosition;

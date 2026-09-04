@@ -26,6 +26,7 @@ int main(int argc, char* argv[])
     Game game(gameContext);
 
     game.Run();
-
+    
+    Game game(gameContext);
     return 0;
 }

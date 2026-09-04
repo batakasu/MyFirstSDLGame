@@ -30,18 +30,3 @@ Vec2 MouseManager::GetPosition() const
 {
     return mPosition;
 }
-
-ButtonState MouseManager::GetLeft() const
-{
-    return mLeft;
-}
-
-ButtonState MouseManager::GetRight() const
-{
-    return mRight;
-}
-
-ButtonState MouseManager::GetMiddle() const
-{
-    return mMiddle;
-}

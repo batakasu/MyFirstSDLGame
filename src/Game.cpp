@@ -1,48 +1,55 @@
 #include "Game.h"
-
-#include <memory>
-
-#include "GameContext.h"
-
+#include "TitleScene.h"
 
 Game::Game(GameContext& gameContext)
     : mGameContext(gameContext)
     , mWindow(gameContext, Vec2(1280, 720))
     , mRenderer(mWindow)
+    , mSceneManager(gameContext)
+    , mLastTime(static_cast<float>(SDL_GetTicks()))
 {
+    // 初期シーンとしてタイトルを設定
+    mSceneManager.ChangeScene<TitleScene>(mSceneManager, mGameContext);
 }
 
 void Game::Run()
 {
-    while(mIsRunning)
+    while (mIsRunning)
     {
         // Δタイムの計算
-        float nowTime = SDL_GetTicks();
-        mDeltaTime = (nowTime - mLastTime) / 1000; // 単位を秒に変換
+        float nowTime = static_cast<float>(SDL_GetTicks());
+        mDeltaTime = (nowTime - mLastTime) / 1000.0f;
         mLastTime = nowTime;
 
-        // フレーム更新
-        while (SDL_PollEvent(&mEvent)) // ユーザーやシステムのイベントを取得する
+        // イベント処理
+        while (SDL_PollEvent(&mEvent))
         {
-            if (mEvent.type == SDL_EVENT_QUIT) // ウィンドウの×を押されたら
+            if (mEvent.type == SDL_EVENT_QUIT)
             {
                 mIsRunning = false;
             }
         }
 
+        // 入力マネージャーのフレーム更新
+        mGameContext.mKeyboard.BeginFrame();
+        mGameContext.mMouse.BeginFrame();
+
         BeginFrame();
 
-        // ゲームの内部処理
+        // ゲームの内部処理（シーンの更新と描画）
+        mSceneManager.Update(mDeltaTime);
+        mSceneManager.Draw();
 
         EndFrame();
-
     }
 }
 
 void Game::BeginFrame()
 {
+    mRenderer.BeginFrame();
 }
 
 void Game::EndFrame()
 {
+    mRenderer.EndFrame();
 }

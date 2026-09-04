@@ -7,15 +7,39 @@ SceneManager::SceneManager(GameContext& gameContext)
 
 SceneManager::~SceneManager() = default;
 
-void SceneManager::Update()
+void SceneManager::Update(float deltaTime)
 {
-    mCurrentScene->Update();
+    ProcessTransition();
+
+    if (mCurrentScene)
+    {
+        mCurrentScene->Update(deltaTime);
+    }
+}
+
+void SceneManager::Draw()
+{
+    if (mCurrentScene)
+    {
+        mCurrentScene->Draw();
+    }
 }
 
 void SceneManager::ChangeScene(std::unique_ptr<Scene> next)
 {
-    if (mCurrentScene) mCurrentScene->Unload();
+    mNextScene = std::move(next);
+}
 
-    mCurrentScene = std::move(next);
-    mCurrentScene->Load();
+void SceneManager::ProcessTransition()
+{
+    if (mNextScene)
+    {
+        if (mCurrentScene)
+        {
+            mCurrentScene->Unload();
+        }
+
+        mCurrentScene = std::move(mNextScene);
+        mCurrentScene->Load();
+    }
 }

@@ -1,14 +1,23 @@
 #pragma once
+#include <memory>
+#include <utility>
+#include "Scene.h"
 
-class Scene
+class SceneManager
 {
 public:
-    virtual ~Scene() = default;
+    template <typename T, typename... Args>
+    void ChangeScene(Args&&... args)
+    {
+        mNextScene = std::make_unique<T>(std::forward<Args>(args)...);
+    }
 
-    virtual void Load() = 0;
-    virtual void Update() = 0;
-    virtual void Unload() = 0; 
+    void Update(float deltaTime);
+    void Draw();
 
 private:
+    std::unique_ptr<Scene> mCurrentScene;
+    std::unique_ptr<Scene> mNextScene;
 
+    void PerformTransition();
 };

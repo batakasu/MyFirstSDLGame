@@ -2,25 +2,29 @@
 #include <SDL3/SDL.h>
 #include "Window.h"
 #include "RendererManager.h"
-
-struct GameContext;
+#include "SceneManager.h"
+#include "GameContext.h"
+#include "Vec2.h"
 
 class Game
 {
 public:
-    Game(GameContext& gameContext);
+    explicit Game(GameContext& gameContext);
+    ~Game() = default;
+
     void Run();
 
 private:
-    GameContext& mGameContext;
-    SDL_Event mEvent;
-    Window mWindow;
-    RendererManager mRenderer;
-
     void BeginFrame();
     void EndFrame();
 
-    bool mIsRunning = true;
-    float mDeltaTime = 0;
-    float mLastTime = 0;
+    GameContext& mGameContext;
+    Window mWindow;
+    RendererManager mRenderer;
+    SceneManager mSceneManager;
+
+    SDL_Event mEvent{};
+    bool mIsRunning{true};
+    float mLastTime{0.0f};
+    float mDeltaTime{0.0f};
 };
