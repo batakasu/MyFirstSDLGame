@@ -19,6 +19,4 @@ private:
     GameContext& mGameContext;
     Vec2 mSize;
     SDL_Window* mHandle;
-    ViewFactory mFactory;
-    ViewManager mManager;
 };

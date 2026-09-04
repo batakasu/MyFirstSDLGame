@@ -6,6 +6,8 @@
 #include "ImageResource.h"
 #include "Vec2.h"
 #include "Window.h"
+#include "ViewManager.h"   // 追加
+#include "ViewFactory.h"   // 追加
 
 class RendererManager
 {
@@ -26,4 +28,7 @@ private:
     Window& mWindow;
     ImageResource mResources;
 
+    // --- ここに持たせる ---
+    ViewManager mViewManager;
+    ViewFactory mViewFactory;
 };

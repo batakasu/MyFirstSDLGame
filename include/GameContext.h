@@ -1,13 +1,12 @@
 #pragma once
 #include <string>
-
-class MouseManager;
-class KeyboardManager;
+#include "KeyboardManager.h"
+#include "MouseManager.h"
 
 // プログラム全体で使い、ユニークな集まり
 struct GameContext
 {
     const std::string mGameTitle;
-    MouseManager& mMouse;
     KeyboardManager& mKeyboard;
+    MouseManager& mMouse;
 };

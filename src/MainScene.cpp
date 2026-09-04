@@ -1,35 +1,93 @@
-#include "EventScene.h"
-#include "ResultScene.h"
+#include "MainScene.h"
+#include "MainSceneState.h"     // 1. 基底クラスを先にインクルードする
+#include "RouteSelectState.h"   // 2. その後に派生クラスをインクルードする
+#include <memory>
+#include <utility>
 
-EventScene::EventScene(SceneManager& sceneManager, GameContext& context)
-    : mSceneManager(sceneManager), mContext(context), mHp(100) {}
-
-void EventScene::Load() {}
-
-void EventScene::Update(float deltaTime)
+MainScene::MainScene(SceneManager& sceneManager, GameContext& context)
+    : mSceneManager(sceneManager)
+    , mContext(context)
+    , mIsUpdating(false)
 {
-    if (mContext.mKeyboard.IsPressed(SDL_SCANCODE_A))
-    {
-        ApplyChoice(true);
+}
+
+MainScene::~MainScene() = default;
+
+void MainScene::Load()
+{
+    ChangeState(std::make_unique<RouteSelectState>());
+}
+
+void MainScene::Update(float deltaTime)
+{
+    mIsUpdating = true;
+    if (mCurrentState) {
+        mCurrentState->Update(*this, deltaTime);
     }
-    else if (mContext.mKeyboard.IsPressed(SDL_SCANCODE_R))
-    {
-        ApplyChoice(false);
+    mIsUpdating = false;
+
+    // Updateの処理が終わった安全なタイミングで状態を切り替える
+    if (mNextState) {
+        if (mCurrentState) {
+            mCurrentState->Exit(*this);
+        }
+        mCurrentState = std::move(mNextState);
+        if (mCurrentState) {
+            mCurrentState->Enter(*this);
+        }
     }
 }
 
-void EventScene::Draw()
+void MainScene::Draw()
 {
-    // 描画処理
+    if (mCurrentState) {
+        mCurrentState->Draw(*this);
+    }
 }
 
-void EventScene::Unload() {}
-
-void EventScene::ApplyChoice(bool accept)
+void MainScene::Unload()
 {
-    mHp -= accept ? 30 : 10;
-    if (mHp <= 0)
-    {
-        mSceneManager.ChangeScene<ResultScene>(mSceneManager, mContext, false);
+    if (mCurrentState) {
+        mCurrentState->Exit(*this);
+        mCurrentState.reset();
     }
+}
+
+void MainScene::ChangeState(std::unique_ptr<MainSceneState> newState)
+{
+    if (mIsUpdating) {
+        // 更新中の呼び出しなら、Update終了後に切り替えるよう予約する
+        mNextState = std::move(newState);
+    } else {
+        // Load時など、更新中でなければ即座に切り替える
+        if (mCurrentState) {
+            mCurrentState->Exit(*this);
+        }
+        mCurrentState = std::move(newState);
+        if (mCurrentState) {
+            mCurrentState->Enter(*this);
+        }
+    }
+}
+
+void MainScene::Heal(int amount)
+{
+    mHp += amount;
+    if (mHp > mMaxHp) {
+        mHp = mMaxHp;
+    }
+}
+
+void MainScene::TakeDamage(int amount)
+{
+    int dmg = (amount - mDefense > 0) ? (amount - mDefense) : 0;
+    mHp -= dmg;
+    if (mHp < 0) {
+        mHp = 0;
+    }
+}
+
+void MainScene::AddMoney(int amount)
+{
+    mMoney += amount;
 }

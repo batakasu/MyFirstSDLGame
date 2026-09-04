@@ -10,7 +10,6 @@ template <typename Tag>
 class StrongId
 {
 public:
-    // デフォルト構築時は 0 を「無効なID」として扱う
     constexpr StrongId() : mValue(0) {}
     explicit constexpr StrongId(uint32_t value) : mValue(value) {}
     

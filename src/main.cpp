@@ -19,14 +19,12 @@ int main(int argc, char* argv[])
     GameContext gameContext
     {
         "AdmitRefuse",
-        mouse,
-        keyboard
+        keyboard,
+        mouse
     };
 
     Game game(gameContext);
 
     game.Run();
-    
-    Game game(gameContext);
     return 0;
 }

@@ -1,23 +1,35 @@
-#include "ViewManager.m"
+#include "ViewManager.h"
+#include "UIView.h"
 
-ViewManager(SDL_Renderer* renderer)
+ViewManager::ViewManager(SDL_Renderer* renderer)
     : mRendererPtr(renderer)
-    , 
-~ViewManager();
-
-ViewId AddView(std::shared_ptr<SDL_Texture> texture, const Vec2& position, const Vec2& size);
-UIView* GetView(ViewId id)
+    , mCurrentId(0)
 {
-    mCurrentId += 1;
+}
+
+ViewManager::~ViewManager() = default;
+
+ViewId ViewManager::AddView(std::shared_ptr<SDL_Texture> texture, const Vec2& position, const Vec2& size)
+{
+    // ビューの追加処理をここに記述
+    mCurrentId = ViewId(mCurrentId.Get() + 1); // 強制型付きIDの加算例
     return mCurrentId;
 }
 
-bool RemoveView(ViewId id)
+UIView* ViewManager::GetView(ViewId id)
 {
+    // IDに対応するUIView*を返す処理
+    // 例: マップ等から検索して返す
+    return nullptr; 
+}
+
+bool ViewManager::RemoveView(ViewId id)
+{
+    // 削除処理
     return true;
 }
 
-void DrawAll()
+void ViewManager::DrawAll()
 {
-    return true;
+    // 描画処理（void なので値を返さない）
 }

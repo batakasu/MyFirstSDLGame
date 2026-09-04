@@ -24,6 +24,6 @@ public:
 
 private:
 	SDL_Renderer* mRendererPtr;
-    ViewId mCurrentId = 0;
+    ViewId mCurrentId{0};
     std::unordered_map<ViewId, std::unique_ptr<UIView>> mViews;
 };

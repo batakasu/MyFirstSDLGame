@@ -9,7 +9,7 @@ Game::Game(GameContext& gameContext)
     , mLastTime(static_cast<float>(SDL_GetTicks()))
 {
     // 初期シーンとしてタイトルを設定
-    mSceneManager.ChangeScene<TitleScene>(mSceneManager, mGameContext);
+    mSceneManager.ChangeScene(std::make_unique<TitleScene>(mSceneManager, mGameContext));
 }
 
 void Game::Run()

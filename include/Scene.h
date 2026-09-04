@@ -3,21 +3,13 @@
 #include <utility>
 #include "Scene.h"
 
-class SceneManager
-{
+class SceneManager;
+
+class Scene {
 public:
-    template <typename T, typename... Args>
-    void ChangeScene(Args&&... args)
-    {
-        mNextScene = std::make_unique<T>(std::forward<Args>(args)...);
-    }
-
-    void Update(float deltaTime);
-    void Draw();
-
-private:
-    std::unique_ptr<Scene> mCurrentScene;
-    std::unique_ptr<Scene> mNextScene;
-
-    void PerformTransition();
+    virtual ~Scene() = default;
+    virtual void Load() = 0;
+    virtual void Update(float deltaTime) = 0;
+    virtual void Draw() = 0;
+    virtual void Unload() = 0;
 };

@@ -4,7 +4,8 @@ RendererManager::RendererManager(Window& window)
     : mHandle(SDL_CreateRenderer(window.GetHandle(), nullptr))
     , mWindow(window)
     , mResources(mHandle)
-    // , mViewManager(mHandle)
+    , mViewManager(mHandle) // ViewManager のコンストラクタ引数に合わせて調整
+    , mViewFactory(mHandle, mResources, mViewManager)
 {
 }
 
@@ -26,7 +27,7 @@ std::shared_ptr<SDL_Texture> RendererManager::LoadImage(const std::string& fileP
 ViewId RendererManager::CreateIlustView(const std::string& filePath, const Vec2& position, const Vec2& size)
 {
     auto texture = mResources.LoadImage(filePath);
-    return 0;
+    return StrongId<ViewTag>(0);
     // return mViewManager.AddView(texture, position, size);
 }
 
